@@ -10,4 +10,5 @@ Dữ liệu không những dừng lại ở những file có kích thước nh�
 <h3>Tại sao nên sử dụng Google Cloud platform?</h3>
 Hầu hết các doanh nghiệp khi xây dựng các ứng dụng đều phải chú ý đến tốc độ, khả năng nâng cấp, bảo trì và đặt biệt là tính bảo mật của hệ thống dữ liệu. Để đảm bảo được các vấn đề này doanh nghiệp thường phải tiêu tốn khoản chi phí đầu tư đáng kể vào việc mua phần cứng và nhân sự để xây dựng và quản lý hệ thống.</br>
 Đó là chưa kể đến trang thiết bị sau một thời gian sẽ trở nên lỗi thời dẫn đến việc nâng cấp đòi hỏi số tiền lớn và các ứng dụng không còn mang lại trải nghiệm tốt cho khách hàng sử dụng dịch vụ hay hệ thống của doanh nghiệp, những vấn đề này sẽ được giải quyết khi doanh nghiệp chuyển đổi lên nền tảng Google Cloud. </br>
+<h1>2. Kubernetes trên gcloud.</h1>
 
