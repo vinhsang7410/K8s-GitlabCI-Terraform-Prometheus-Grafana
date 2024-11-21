@@ -3,7 +3,7 @@ Google Cloud platform là gì? Đây là từ được viết tắt GCP hay còn
 <h3>Các dịch vụ của Google Cloud Platform</h3>
 <b>IOT (Internet of Things):</b> cho phép người sử dụng quản lý và tiêu thụ dữ liệu từ những thiết bị IOT một cách thuận lợi.</br>
 <b>Cloud Machine Learning Engine (Tìm kiếm đám mây):</b> dùng để phát triển ứng dụng trí tuệ nhân tạo (hay còn gọi là AI)</br>
-<b><Google Cloud:/b> Cung cấp các dịch vụ như Hadoop và Apache Spark bao gồm Google Cloud Dataproc để dữ liệu được xử lý dễ dàng hơn và nhanh hơn.</br>
+<b>Google Cloud:</b> Cung cấp các dịch vụ như Hadoop và Apache Spark bao gồm Google Cloud Dataproc để dữ liệu được xử lý dễ dàng hơn và nhanh hơn.</br>
 <b>Google Cloud Dataflow:</b> Dịch vụ xử lý dữ liệu cho những công việc phân tích, phục vụ cho các dự án tính toán theo thời gian thực tế, trích xuất, chuyển đổi và tải (ETL).</br>
 <b>Google BigQuery:</b> nơi cung cấp tài nguyên khổng lồ của Google , bao gồm những dịch vụ xử lý dữ liệu và phân tích. Google BigQuery có chức năng để truy vấn tương tự công cụ SQL truyền thống được thực hiện đối với bộ dữ liệu nhiều terabyte. Tuy nhiên, trên thực tế việc lưu trữ những dữ liệu vô cùng cần thiết và quan trọng.
 Dữ liệu không những dừng lại ở những file có kích thước nhỏ mà còn có thể lên đến terabyte.</br>
