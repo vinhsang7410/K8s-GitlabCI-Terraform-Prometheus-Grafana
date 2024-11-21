@@ -1,0 +1,35 @@
+stages:
+  - test
+  - deploy
+
+variables:
+  KUBECONFIG: "/etc/kubernetes/admin.conf"
+
+
+test_php:
+  stage: test
+  image: php:8.2-cli
+  script:
+    - echo "Checking PHP syntax"
+    - find . -name "*.php" -print0 | xargs -0 -n1 php -l
+    - echo "Running PHPUnit tests"
+    - ./vendor/bin/phpunit --configuration phpunit.xml
+  only:
+    - dev 
+  artifacts:
+    paths:
+      - .
+
+deploy_to_kubernetes:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - echo "Deploying to Kubernetes"
+    - kubectl config set-context $KUBECONTEXT
+    - kubectl apply -f newk8s.yaml
+    - POD_NAME=$(kubectl get pod --no-headers -o custom-columns=":metadata.name" | grep '^php-deployment-' | head -n 1)
+    - kubectl cp . "$POD_NAME":/var/www/html/
+  dependencies:
+    - test_php
+  only:
+    - main

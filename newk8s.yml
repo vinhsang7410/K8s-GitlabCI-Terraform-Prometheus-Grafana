@@ -1,0 +1,200 @@
+#Deployment for Apache
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+    spec:
+      containers:
+      - name: apache
+        image: gcr.io/do-an-tot-nghiep-435704/my-apache-using-ubuntu:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: apache-volume
+          mountPath: /var/www/html
+        # env:
+        # - name: PHP_SERVICE_HOST
+        #   value: "php-service"
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "128Mi"
+          limits:
+            cpu: "0.15"
+            memory: "192Mi"
+      volumes:
+      - name: apache-volume
+        persistentVolumeClaim:
+          claimName: apache-and-php-pvc
+---
+#ClusterIp Apache for internal
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-service
+spec:
+  selector:
+    app: apache
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+# Deployment for PHP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php
+  template:
+    metadata:
+      labels:
+        app: php
+    spec:
+      containers:
+      - name: php-container
+        image: gcr.io/do-an-tot-nghiep-435704/my-php:7.4-fpm
+        ports:
+        - containerPort: 9000
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "128Mi"
+          limits:
+            cpu: "0.15"
+            memory: "192Mi"
+        volumeMounts:
+        - name: php-volume
+          mountPath: /var/www/html
+      volumes:
+        - name: php-volume
+          persistentVolumeClaim:
+            claimName: apache-and-php-pvc
+---
+# Service for PHP (ClusterIP for internal communication)
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-fpm
+spec:
+  selector:
+    app: php
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+  type: ClusterIP
+
+---
+# Deployment for MySQL
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      initContainers:
+      - name: cleanup
+        image: busybox
+        command: ['sh', '-c', 'rm -rf /var/lib/mysql/*']
+        volumeMounts:
+        - name: mysql-volume
+          mountPath: /var/lib/mysql
+      containers:
+      - name: mysql-container
+        image: gcr.io/do-an-tot-nghiep-435704/my-mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: "128Mi"
+          limits:
+            cpu: "0.2"
+            memory: "256Mi"
+        volumeMounts:
+        - name: mysql-volume
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-volume
+        persistentVolumeClaim:
+          claimName: mysql-volume-pvc
+---
+# Service for MySQL (ClusterIP for internal communication)
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: ClusterIP
+---
+# PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-volume-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: apache-and-php-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer
+spec:
+  selector:
+    app: apache
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 31200
+  type: LoadBalancer
+---
+
