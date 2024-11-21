@@ -20,4 +20,19 @@ Tên gọi Kubernetes có nguồn gốc từ tiếng Hy Lạp, có ý nghĩa là
 <b>Đóng gói tự động:</b> Bạn cung cấp cho Kubernetes một cluster gồm các node mà nó có thể sử dụng để chạy các tác vụ được đóng gói (containerized task). Bạn cho Kubernetes biết mỗi container cần bao nhiêu CPU và bộ nhớ (RAM). Kubernetes có thể điều phối các container đến các node để tận dụng tốt nhất các resource của bạn.</br>
 <b>Tự phục hồi:</b> Kubernetes khởi động lại các containers bị lỗi, thay thế các container, xoá các container không phản hồi lại cấu hình health check do người dùng xác định và không cho các client biết đến chúng cho đến khi chúng sẵn sàng hoạt động.</br>
 <b>Quản lý cấu hình và bảo mật:</b> Kubernetes cho phép bạn lưu trữ và quản lý các thông tin nhạy cảm như: password, OAuth token và SSH key. Bạn có thể triển khai và cập nhật lại secret và cấu hình ứng dụng mà không cần build lại các container image và không để lộ secret trong cấu hình stack của bạn.</br>
-<h1>3. T</h1>
+<h1>3. Gitlab là gì và tầm quan trọng của Gitlab-ci</h1>
+<p>GitLab là một nền tảng DevOps toàn diện được sử dụng để quản lý mã nguồn và quy trình phát triển phần mềm. Nền tảng này cung cấp một môi trường tích hợp để quản lý mã nguồn, kiểm tra mã, quản lý vấn đề, triển khai tự động và theo dõi quy trình phát triển phần mềm.</p>
+<h3>Các phiên bản</h3>
+<ul>
+<li>Gitlab Community Edition (CE): Phiên bản cộng đồng, mã nguồn mở. Đây là bản mới nhất, được nhà phát triển release từ các nhánh stable và nhánh master.</li>
+<li>GitLab Enterprise Edition (EE): Phiên bản sử dụng cho các đối tượng là doanh nghiệp. Công cụ được cung cấp từ kho lưu trữ của gitlab.com. Ngay khi đăng ký, bạn sẽ nhận được hỗ trợ của GitLab BV. Vấn đề liên quan đến cài đặt và sử dụng đều được xử lý nhanh chóng.</li>
+<li>Gitlab Continuous Integration (CI): Một giải pháp tích hợp, được thực hiện bởi nhóm phát triển GitLab.</li>
+</ul>
+<p>Mỗi loại sẽ đem đến những hỗ trợ khác nhau cho người dùng. Nhờ có sự nâng cấp liên tục nên luôn đảm bảo trải nghiệm hoàn hảo nhất.</p>
+<h3>Protected Branches</h3>
+<p>Tính năng Protected Branches trong GitLab cho phép giới hạn quyền truy cập vào Repository và các Branches, ngăn chặn việc push code từ những đối tượng không được cấp quyền và ngăn chặn hành động xóa Branch. Master Branch là Protected Branch mặc định và user cần được cấp ít nhất một quyền từ Master để bảo mật nhánh.</p>
+![image](https://github.com/user-attachments/assets/bb238eb3-89a8-4d85-a6c7-035b90122acf)
+<h3>System Layout</h3>
+<p>GitLab là một ứng dụng được viết bằng Ruby on Rails. Vì vậy, để hiểu rõ hoạt động của nó, ta cần hiểu phương thức vận hành của ngôn ngữ lập trình này. Ruby on Rails là ngôn ngữ lập trình được sử dụng cho GitLab. Khi cài đặt GitLab-Shell, công cụ sẽ được đặt trong thư mục /home/git/gitlab-shell và người dùng có thể sử dụng kho dữ liệu thông qua SSH.</p>
+<h3>Tầng vật lý</h3>
+<p>Tầng vật lý bao gồm kho lưu trữ, Nginx, cơ sở dữ liệu và GitLab-Shell. Các thành phần này hoạt động như một cỗ máy trong quá trình khai thác.</p>
